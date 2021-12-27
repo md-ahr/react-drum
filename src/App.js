@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from 'react';
+import { initialState, reducer, DrumStateContext, DrumDispatchContext } from './context/drumContext';
+import PadBank from './components/PadBank';
+import AudioController from './components/AudioController';
 
 function App() {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DrumStateContext.Provider value={state}>
+      <DrumDispatchContext.Provider value={dispatch}>
+        <div id="drum-machine" className="container">
+          <h1 className="title text-center mt-4">Drum Machine</h1>
+          <div className="d-flex justify-content-between align-items-center">
+            <PadBank />
+            <AudioController />
+          </div>
+        </div>
+        </DrumDispatchContext.Provider>
+    </DrumStateContext.Provider>
   );
+
 }
 
 export default App;
